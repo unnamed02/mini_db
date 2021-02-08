@@ -16,7 +16,7 @@
 #include <chrono>  // NOLINT
 #include <cstdint>
 
-namespace bustub {
+namespace mini_db {
 
 static constexpr int PAGE_SIZE = 4096;  
 
