@@ -7,6 +7,7 @@ TEST(BufferPool,BasicTest){
 
 
    char hello_str[mini_db::PAGE_SIZE] = "hello new page";
+   
    disk_manager_ptr->WritePage(p_id,hello_str);
    char buffer[mini_db::PAGE_SIZE];
    disk_manager_ptr->ReadPage(p_id,buffer);
