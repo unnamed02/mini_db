@@ -4,8 +4,10 @@ namespace mini_db{
     class BinaryIndex :public Index{
         
         public:
+
         page_id_t GetPage(duration_t duration);
-        bool WritePage(Page page);        
+
+        bool WriteSlice(duration_t duration,char* content);        
 
     };
 }

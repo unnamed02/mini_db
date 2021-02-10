@@ -18,8 +18,13 @@ class Index{
 
     virtual page_id_t GetPage(duration_t duration) = 0;
 
-    virtual bool WritePage(Page page) = 0;
-    
+    virtual bool WriteSlice(duration_t duration,char* content) = 0;
+
+    size_t GetSliceLength(duration_t duration);
+
+    int32_t GetSlice(duration_t duration,char** dst);   
+
+
     protected:
 
     DiskManager* disk_manager_ptr_; 
@@ -36,13 +41,12 @@ class Index{
 
     duration_t cur_duration_;
 
+    Page* buffer_;
+    
     private:
     //index shouldn't be copy able
     Index(const Index&);
     Index& operator=(const Index&);
-
-    Page buffer_[];
-
 };
 
 }
