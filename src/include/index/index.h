@@ -3,7 +3,8 @@
 #include <string>
 #include <assert.h>
 #include "disk/disk_manager.h"
-#include "index/page.h"
+#include "index/frame.h"
+#include "common/config.h"
 
 namespace mini_db{
 
@@ -18,11 +19,13 @@ class Index{
 
     virtual page_id_t GetPage(duration_t duration) = 0;
 
-    virtual bool WriteSlice(duration_t duration,char* content) = 0;
+    virtual page_id_t WriteSlice(duration_t duration,char* content);
 
     size_t GetSliceLength(duration_t duration);
 
-    int32_t GetSlice(duration_t duration,char** dst);   
+    int32_t GetSlice(duration_t duration,char* dst);
+    
+    farme_id_t GetFrame(duration_t duration);
 
 
     protected:
@@ -33,15 +36,17 @@ class Index{
     uint32_t max_pages_;
 
     //current number of pages,since disk_manager's page id keep growing
-    //we record the max number of current used page
-    page_id_t cur_pages_;
+    //the largest page is the curent page
+    page_id_t cur_page_;
     
     //mp4 time scale
     time_scale_t scale_;
 
     duration_t cur_duration_;
 
-    Page* buffer_;
+    uint32_t buffer_size_;
+
+    Frame* buffer_;
     
     private:
     //index shouldn't be copy able

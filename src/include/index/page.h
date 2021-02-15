@@ -1,33 +1,39 @@
-#include <cstring>
 #include "common/config.h"
-
 namespace mini_db{
 
+const int32_t CONTENT_HEADER_SIZE = 16;
+const int32_t MAX_CONTENT_SIZE = PAGE_SIZE - CONTENT_HEADER_SIZE;
+
 class Page{
+
     friend class Index;
+    
     public:
-    Page(){ResetMemory();}
 
-    ~Page() = default;
-
-    inline char* GetData(){return data_;}
+    inline duration_t GetStart(){return start_;}
 
     inline duration_t GetDuration(){return duration_;}
-
-    inline duration_t GetStartTime(){return start_;}
     
-    private:
-    inline void ResetMemory() { memset(data_,0, PAGE_SIZE);}
+    inline page_id_t GetPageId(){return page_id_;}
 
-    page_id_t page_id_;
-
-
-    duration_t start_;
-
-    duration_t duration_;
+    inline int32_t GetOffset(){return content_offset_;}
     
-    //the actual page content
-    char data_[PAGE_SIZE]{};
-};
+    inline int32_t GetCatalogue(){return catalogue_;}
+    
+    bool Append(duration_t duration,char* slice);
+    
+    int16_t Find(duration_t duration);
+    
+    private:        
+    
+    duration_t     start_;
+    duration_t     duration_;
 
+    page_id_t      page_id_;
+        
+    int16_t       content_offset_;
+    int16_t       catalogue_;
+        
+    char           content_[0];    
+    };
 }
