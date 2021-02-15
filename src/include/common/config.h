@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 namespace mini_db {
 
 static const int PAGE_SIZE = 4096;  

@@ -3,7 +3,7 @@
 #include <string>
 #include <assert.h>
 #include "disk/disk_manager.h"
-#include "index/frame.h"
+#include "page/frame.h"
 #include "common/config.h"
 
 namespace mini_db{

@@ -1,5 +1,5 @@
 #include "index/binary_index.h"
-#include "index/page.h"
+#include "page/page.h"
 namespace mini_db{
 
 page_id_t BinaryIndex::WriteSlice(duration_t duration,char* content){
@@ -26,7 +26,7 @@ Index(disk_manager,scale,max_pages,buffer_size){
 }
 
 BinaryIndex::~BinaryIndex(){
-    
+
 }
 
 }
