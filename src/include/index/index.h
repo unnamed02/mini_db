@@ -5,7 +5,7 @@
 #include "disk/disk_manager.h"
 #include "page/frame.h"
 #include "common/config.h"
-
+#include "common/logger.h"
 namespace mini_db{
 
 class Index{
@@ -35,9 +35,9 @@ class Index{
     //max number of pages
     uint32_t max_pages_;
 
-    //current number of pages,since disk_manager's page id keep growing
-    //the largest page is the curent page
-    page_id_t cur_page_;
+    //current page id,since disk_manager's page id keep growing
+    //the largest page id is the curent page id 
+    page_id_t cur_page_id_;
     
     //mp4 time scale
     time_scale_t scale_;

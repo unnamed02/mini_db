@@ -1,4 +1,5 @@
 #include "common/config.h"
+#include <cstring>
 namespace mini_db{
 
 static const int32_t CONTENT_HEADER_SIZE = 16;
@@ -16,9 +17,19 @@ class Page{
     
     inline page_id_t GetPageId(){return page_id_;}
 
+    inline Page(duration_t start,page_id_t page_id):
+    start_(start),
+    page_id_(page_id),
+    duration_(0),
+    content_offset_(0),
+    catalogue_offset_(MAX_CONTENT_SIZE){};
+
+    virtual ~Page();
+
     inline int32_t GetOffset(){return content_offset_;}
     
-    inline int32_t GetCatalogue(){return catalogue_;}
+    inline int32_t GetCatalogueOffset(){return catalogue_offset_;}
+
     
     bool Append(duration_t duration,char* slice);
     
@@ -32,7 +43,7 @@ class Page{
     page_id_t      page_id_;
         
     int16_t       content_offset_;
-    int16_t       catalogue_;
+    int16_t       catalogue_offset_;
         
     char           content_[0];    
     };
