@@ -4,7 +4,7 @@ namespace mini_db{
 
 page_id_t BinaryIndex::WriteSlice(duration_t duration,char* content){
     // use Index::WriteSlice(duration,content) to do the real job
-    // you can keep a record of cur_pages_ and once its return value equals to that
+    // you can keep a record of cur_page_id and once its return value does not equal to that
     // you update your datastruct
     
 }

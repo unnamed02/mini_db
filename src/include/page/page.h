@@ -17,12 +17,13 @@ class Page{
     
     inline page_id_t GetPageId(){return page_id_;}
 
-    inline Page(duration_t start,page_id_t page_id):
-    start_(start),
-    page_id_(page_id),
-    duration_(0),
-    content_offset_(0),
-    catalogue_offset_(MAX_CONTENT_SIZE){};
+    inline void Init(duration_t start,page_id_t page_id){
+        start_ = start,
+        page_id_ = page_id,
+        duration_ = 0,
+        content_offset_ = 0,
+        catalogue_offset_ = MAX_CONTENT_SIZE;
+    };
 
     virtual ~Page();
 
