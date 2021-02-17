@@ -17,7 +17,6 @@ class Frame{
     inline duration_t GetStart(){return start_;}
 
     inline void Init(page_id_t page_id,duration_t start,duration_t duration){
-        ResetMemory();
         page_id_ = page_id;
         start_ = start;
         duration_ = duration;

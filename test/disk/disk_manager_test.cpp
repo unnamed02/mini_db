@@ -1,7 +1,7 @@
 #include "disk/disk_manager.h"
 #include <gtest/gtest.h>
 
-TEST(BufferPool,BasicTest){
+TEST(DISK_MANAGER_TEST,BASIC_TEST){
    auto disk_manager_ptr = new mini_db::DiskManager("test.db");
    mini_db::page_id_t p_id = disk_manager_ptr->AllocatePage();
 

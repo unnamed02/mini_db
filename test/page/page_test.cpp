@@ -3,7 +3,7 @@
 #include "page/page.h"
 #include "iostream"
 
-TEST(page_test,basic_test){
+TEST(PAGE_TEST,BAISC_TEST){
     auto disk_manager_ptr = new mini_db::DiskManager("test.db");
     mini_db::page_id_t page_id = disk_manager_ptr->AllocatePage();
     
@@ -20,10 +20,14 @@ TEST(page_test,basic_test){
 
     memset(buffer,0,mini_db::PAGE_SIZE);
 
-
     disk_manager_ptr->ReadPage(page_id,buffer);
     page_ptr = reinterpret_cast<mini_db::Page*>(buffer);
     ASSERT_EQ(page_ptr->GetOffset(),500);
     ASSERT_EQ(page_ptr->GetCatalogueOffset(),mini_db::MAX_CONTENT_SIZE-600);
-
+    
+    int16_t start;
+    int16_t end;
+    page_ptr->Find(14,&start,&end);
+    ASSERT_EQ(start,5);
+    ASSERT_EQ(end,10);
 }

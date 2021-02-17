@@ -51,7 +51,7 @@ int32_t Index::GetSlice(duration_t duration,char* dst){
     
 }
 
-page_id_t Index::WriteSlice(duration_t duration,char* slice){
+page_id_t Index::WriteSlice(const duration_t duration,char* slice){
     auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
     if(cur_page->Append(duration,slice)){
         cur_duration_ += duration;
@@ -70,7 +70,7 @@ page_id_t Index::WriteSlice(duration_t duration,char* slice){
 }
 
 // TODO: use stl datastruct to record this
-farme_id_t Index::GetFrame(duration_t duration){
+farme_id_t Index::GetFrame(const duration_t duration){
     for(int i = 1;i<buffer_size_;i++){
         
     }

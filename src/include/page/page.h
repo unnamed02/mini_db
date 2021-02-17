@@ -34,7 +34,7 @@ class Page{
     
     bool Append(duration_t duration,char* slice);
     
-    int16_t Find(duration_t duration);
+    bool Find(duration_t duration,int16_t * const start,int16_t * const end);
     
     private:        
     
