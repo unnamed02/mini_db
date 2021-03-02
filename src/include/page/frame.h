@@ -1,4 +1,3 @@
-#include <cstring>
 #include "common/config.h"
 
 namespace mini_db{

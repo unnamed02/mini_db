@@ -30,7 +30,6 @@ TEST(PAGE_TEST,BASIC_TEST){
     for(int i = 0;i<100;i++){
         page_ptr->Find(i*12+1,&start,&length);
         ASSERT_EQ(start,i*5);
-        LOG_DEBUG("hello");
         ASSERT_EQ(length,5);
     }
 }

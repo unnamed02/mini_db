@@ -5,7 +5,7 @@ namespace mini_db{
 
 static const int32_t CONTENT_HEADER_SIZE = 16;
 static const int32_t MAX_CONTENT_SIZE = PAGE_SIZE - CONTENT_HEADER_SIZE;
-static const int32_t SLOT_SIZE = 6;
+static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
 
 class Page{
 
@@ -19,7 +19,7 @@ class Page{
     
     inline page_id_t GetPageId(){return page_id_;}
 
-    inline void Init(duration_t start,page_id_t page_id){
+    inline void Init(const duration_t start,const page_id_t page_id){
         start_ = start,
         page_id_ = page_id,
         duration_ = 0,
@@ -34,9 +34,9 @@ class Page{
     inline int32_t GetCatalogueOffset(){return catalogue_offset_;}
 
     
-    bool Append(duration_t duration,char* slice);
+    bool Append(const duration_t duration,char* const slice);
     
-    bool Find(duration_t duration,int16_t * const start,int16_t * const length);
+    bool Find(const duration_t duration,page_offset_t * const start,page_offset_t * const length);
     
     private:        
     
@@ -45,8 +45,8 @@ class Page{
 
     page_id_t      page_id_;
         
-    int16_t       content_offset_;
-    int16_t       catalogue_offset_;
+    page_offset_t       content_offset_;
+    page_offset_t       catalogue_offset_;
         
     char           content_[0];    
     };
