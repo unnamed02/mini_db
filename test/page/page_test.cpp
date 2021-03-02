@@ -23,10 +23,10 @@ TEST(PAGE_TEST,BASIC_TEST){
     disk_manager_ptr->ReadPage(page_id,buffer);
     page_ptr = reinterpret_cast<mini_db::Page*>(buffer);
     ASSERT_EQ(page_ptr->GetOffset(),500);
-    ASSERT_EQ(page_ptr->GetCatalogueOffset(),mini_db::MAX_CONTENT_SIZE-600);
+    ASSERT_EQ(page_ptr->GetCatalogueOffset(),mini_db::MAX_CONTENT_SIZE-100 * mini_db::SLOT_SIZE);
     
-    int16_t start;
-    int16_t length;
+    mini_db::page_offset_t start;
+    mini_db::page_offset_t length;
     for(int i = 0;i<100;i++){
         page_ptr->Find(i*12+1,&start,&length);
         ASSERT_EQ(start,i*5);

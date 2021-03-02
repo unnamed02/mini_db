@@ -3,9 +3,25 @@
 #include <cstring>
 namespace mini_db{
 
-static const int32_t CONTENT_HEADER_SIZE = 16;
-static const int32_t MAX_CONTENT_SIZE = PAGE_SIZE - CONTENT_HEADER_SIZE;
-static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
+static inline int CONTENT_HEADER_SIZE(){
+    int size = 0;
+    size += 2 * DURATION_SIZE;
+
+    if(size % PAGE_ID_SIZE == 0){
+        size += PAGE_ID_SIZE;
+    }else{
+        size = ((size/PAGE_ID_SIZE)+2)*PAGE_ID_SIZE;
+    }
+
+     if(size % PAGE_OFFSET_SIZE == 0){
+        size += PAGE_OFFSET_SIZE * 2;
+    }else{
+        size = ((size/PAGE_OFFSET_SIZE)+3)*PAGE_OFFSET_SIZE;
+    }
+    return size;
+}
+
+static const int32_t MAX_CONTENT_SIZE = PAGE_SIZE - CONTENT_HEADER_SIZE();
 
 class Page{
 
