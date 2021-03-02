@@ -40,7 +40,7 @@ namespace mini_db{
                 max = mid - 1;
             }
         }
-        page_offset_t offset = MAX_CONTENT_SIZE-(min*SLOT_SIZE);
+        page_offset_t offset = MAX_CONTENT_SIZE - (min * SLOT_SIZE);
     
         auto offset_ptr = reinterpret_cast<page_offset_t*>(content_ + offset + DURATION_SIZE);
         *start = *offset_ptr;
@@ -56,7 +56,7 @@ namespace mini_db{
             if(*duration_ptr <= duration){
                 return false;
             }
-            *length = (*offset_ptr)-(*start);
+            *length = (*offset_ptr) - (*start);
         }
         return true;
     }
