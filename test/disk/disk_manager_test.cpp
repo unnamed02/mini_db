@@ -5,7 +5,6 @@ TEST(DISK_MANAGER_TEST,BASIC_TEST){
    auto disk_manager_ptr = new mini_db::DiskManager("test.db");
    mini_db::page_id_t p_id = disk_manager_ptr->AllocatePage();
 
-
    char hello_str[mini_db::PAGE_SIZE] = "hello new page";
    
    disk_manager_ptr->WritePage(p_id,hello_str);

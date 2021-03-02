@@ -9,12 +9,17 @@ Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages
     cur_page_id_(0),
     cur_duration_(0),
     buffer_size_(buffer_size){
-        buffer_ = new Frame[buffer_size];    
+    buffer_ = new Frame[buffer_size];
+    AllocNewPage();
+    auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
+    pg->Init(0,cur_page_id_);
 }
 
 page_id_t Index::AllocNewPage(){
     this->cur_page_id_ = this->disk_manager_ptr_ -> AllocatePage();
-    assert(cur_page_id_ < max_pages_);
+    if(cur_page_id_ > max_pages_){
+        return INVALID_PAGE_ID;
+    }
     buffer_[0].Init(cur_page_id_,cur_duration_,0);
     return cur_page_id_;
 }
@@ -22,27 +27,27 @@ page_id_t Index::AllocNewPage(){
 //should find in the buffer_[0],the last page
 //and then find in the rest buffer
 char* Index::GetSlice(duration_t duration){
-    int16_t start,end;
+    int16_t start,length;
     if(duration > buffer_[0].GetStart()){
         auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
-        if(pg->Find(duration,&start,&end)){
-            char *dst = (char*)malloc(end-start);
-            memmove(dst,pg->content_ + start,end);
+        if(pg->Find(duration,&start,&length)){
+            char *dst = (char*)malloc(length);
+            memmove(dst,pg->content_ + start,length);
             return dst;
         }
+        LOG_DEBUG("hello");
         return nullptr;
     }else{
         int32_t frame_id = this->GetFrame(duration);
         if(frame_id != INVALID_FRAME_ID){
             auto pg = reinterpret_cast<Page*>(buffer_[frame_id].GetData());
-            if(pg->Find(duration,&start,&end)){
-                char *dst = (char*)malloc(end-start);
-                memmove(dst,pg->content_ + start,end);
+            if(pg->Find(duration,&start,&length)){
+                char *dst = (char*)malloc(length);
+                memmove(dst,pg->content_ + start,length);
                 return dst; 
             }
         }
         
-        //TODO: should find a replacer first
         page_id_t page_id = this->GetPage(duration);
         if(page_id == INVALID_PAGE_ID){
             return nullptr;
@@ -74,7 +79,7 @@ page_id_t Index::WriteSlice(const duration_t duration,char* slice){
     }
 }
 
-// TODO: use stl datastruct to record this
+// TODO: use STL datastruct to record this
 farme_id_t Index::GetFrame(const duration_t duration){
     for(int i = 1;i<buffer_size_;i++){
         

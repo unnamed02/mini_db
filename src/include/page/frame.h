@@ -1,5 +1,5 @@
 #include "common/config.h"
-
+#include <cstring>
 namespace mini_db{
 
 class Frame{

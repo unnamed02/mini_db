@@ -6,7 +6,7 @@ page_id_t BinaryIndex::WriteSlice(const duration_t duration,char* const content)
     // use Index::WriteSlice(duration,content) to do the real job
     // you can keep a record of cur_page_id and once its return value does not equal to that
     // you update your datastruct
-    
+    Index::WriteSlice(duration,content);
 }
 
 page_id_t BinaryIndex::GetPage(const duration_t duration){

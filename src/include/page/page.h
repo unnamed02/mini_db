@@ -35,6 +35,9 @@ class Page{
     
     inline page_id_t GetPageId(){return page_id_;}
 
+    //FOR TEST ONLY
+    inline char* GetContent(){return content_;}
+
     inline void Init(const duration_t start,const page_id_t page_id){
         start_ = start,
         page_id_ = page_id,
@@ -64,6 +67,6 @@ class Page{
     page_offset_t       content_offset_;
     page_offset_t       catalogue_offset_;
         
-    char           content_[0];    
+    char           content_[0]{};
     };
 }

@@ -17,7 +17,7 @@ class Index{
     page_id_t AllocNewPage();
 
     virtual page_id_t GetPage(const duration_t) = 0;
-
+    
     virtual page_id_t WriteSlice(const duration_t,char* const content);
 
     size_t GetSliceLength(const duration_t);
@@ -43,6 +43,7 @@ class Index{
 
 
     protected:
+
 
     DiskManager* disk_manager_ptr_; 
 

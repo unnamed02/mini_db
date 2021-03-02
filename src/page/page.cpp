@@ -4,7 +4,8 @@ namespace mini_db{
 
     bool Page::Append(const duration_t duration,char* const slice){
         size_t length = strlen(slice);
-        if(content_offset_ + length >= catalogue_offset_ - SLOT_SIZE){
+        // LOG_DEBUG("content + length : %d catalogue_offset - SLOT_SIZE : %d",(int)(content_offset_ + length),(int)(catalogue_offset_ - SLOT_SIZE));
+        if(content_offset_ + length > catalogue_offset_ - SLOT_SIZE){
             return false;
         }
         else{
@@ -24,6 +25,7 @@ namespace mini_db{
     }
 
     bool Page::Find(const duration_t duration,page_offset_t * const start,page_offset_t * const length){
+        LOG_DEBUG("MAX_CONTENT_SIZE : %d catalogue_offset : %d",MAX_CONTENT_SIZE,this->catalogue_offset_);
         if(catalogue_offset_ == MAX_CONTENT_SIZE){
             return false;
         }
