@@ -25,7 +25,7 @@ namespace mini_db{
     }
 
     bool Page::Find(const duration_t duration,page_offset_t * const start,page_offset_t * const length){
-        LOG_DEBUG("MAX_CONTENT_SIZE : %d catalogue_offset : %d",MAX_CONTENT_SIZE,this->catalogue_offset_);
+        // LOG_DEBUG("MAX_CONTENT_SIZE : %d catalogue_offset : %d",MAX_CONTENT_SIZE,this->catalogue_offset_);
         if(catalogue_offset_ == MAX_CONTENT_SIZE){
             return false;
         }
@@ -41,13 +41,21 @@ namespace mini_db{
             }
         }
         page_offset_t offset = MAX_CONTENT_SIZE-(min*SLOT_SIZE);
+    
         auto offset_ptr = reinterpret_cast<page_offset_t*>(content_ + offset + DURATION_SIZE);
         *start = *offset_ptr;
         offset_ptr -= SLOT_SIZE/PAGE_OFFSET_SIZE;
         // LOG_DEBUG("offset:%d calalogue_offset_%d",offset,catalogue_offset_);
         if(offset  == catalogue_offset_){
+            if(duration_ <= duration){
+                return false;
+            }
             *length = content_offset_ - (*start);
         }else{
+            auto duration_ptr = reinterpret_cast<page_offset_t*>(content_ + offset - SLOT_SIZE);
+            if(*duration_ptr <= duration){
+                return false;
+            }
             *length = (*offset_ptr)-(*start);
         }
         return true;

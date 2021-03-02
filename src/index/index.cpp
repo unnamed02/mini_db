@@ -35,7 +35,6 @@ char* Index::GetSlice(duration_t duration){
             memmove(dst,pg->content_ + start,length);
             return dst;
         }
-        LOG_DEBUG("hello");
         return nullptr;
     }else{
         int32_t frame_id = this->GetFrame(duration);
