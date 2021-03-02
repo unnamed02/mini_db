@@ -18,8 +18,8 @@ static const int DURATION_SIZE = 4;
 
 using time_scale_t = uint32_t;
 
-using page_offset_t = int16_t;
-static const int PAGE_OFFSET_SIZE = 2;
+using page_offset_t = int32_t;
+static const int PAGE_OFFSET_SIZE = 4;
 
 static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
 

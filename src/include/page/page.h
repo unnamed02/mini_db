@@ -3,7 +3,7 @@
 #include <cstring>
 namespace mini_db{
 
-static inline int CONTENT_HEADER_SIZE(){
+inline int32_t CONTENT_HEADER_SIZE(){
     int size = 0;
     size += 2 * DURATION_SIZE;
 
@@ -13,7 +13,7 @@ static inline int CONTENT_HEADER_SIZE(){
         size = ((size/PAGE_ID_SIZE)+2)*PAGE_ID_SIZE;
     }
 
-     if(size % PAGE_OFFSET_SIZE == 0){
+    if(size % PAGE_OFFSET_SIZE == 0){
         size += PAGE_OFFSET_SIZE * 2;
     }else{
         size = ((size/PAGE_OFFSET_SIZE)+3)*PAGE_OFFSET_SIZE;
