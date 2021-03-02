@@ -21,28 +21,31 @@ page_id_t Index::AllocNewPage(){
 
 //should find in the buffer_[0],the last page
 //and then find in the rest buffer
-int32_t Index::GetSlice(duration_t duration,char* dst){
+char* Index::GetSlice(duration_t duration){
+    int16_t start,end;
     if(duration > buffer_[0].GetStart()){
         auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
-        if(pg->Find(duration) > 0){
-            memmove(dst,pg->content_ + pg->Find(duration),strlen(dst));
-            return true;
+        if(pg->Find(duration,&start,&end)){
+            char *dst = (char*)malloc(end-start);
+            memmove(dst,pg->content_ + start,end);
+            return dst;
         }
-        return false;
+        return nullptr;
     }else{
         int32_t frame_id = this->GetFrame(duration);
         if(frame_id != INVALID_FRAME_ID){
             auto pg = reinterpret_cast<Page*>(buffer_[frame_id].GetData());
-            if(pg->Find(duration) > 0){
-                memmove(dst,pg->content_ + pg->Find(duration),strlen(dst));
-                return true; 
+            if(pg->Find(duration,&start,&end)){
+                char *dst = (char*)malloc(end-start);
+                memmove(dst,pg->content_ + start,end);
+                return dst; 
             }
         }
         
         //TODO: should find a replacer first
         page_id_t page_id = this->GetPage(duration);
         if(page_id == INVALID_PAGE_ID){
-            return false;
+            return nullptr;
         }else{
             
         }
@@ -50,6 +53,8 @@ int32_t Index::GetSlice(duration_t duration,char* dst){
     }
     
 }
+
+
 
 page_id_t Index::WriteSlice(const duration_t duration,char* slice){
     auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());

@@ -8,9 +8,9 @@ namespace mini_db{
 
         ~BinaryIndex();
         
-        page_id_t WriteSlice(const duration_t duration,char * const content);
+        page_id_t WriteSlice(const duration_t,char * const content);
 
-        page_id_t GetPage(const duration_t duration);
+        page_id_t GetPage(const duration_t);
 
         private:
 

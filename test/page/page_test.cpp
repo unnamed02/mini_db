@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include "disk/disk_manager.h"
 #include "page/page.h"
-#include "iostream"
 
-TEST(PAGE_TEST,BAISC_TEST){
+
+TEST(PAGE_TEST,BASIC_TEST){
     auto disk_manager_ptr = new mini_db::DiskManager("test.db");
     mini_db::page_id_t page_id = disk_manager_ptr->AllocatePage();
     
@@ -26,8 +26,11 @@ TEST(PAGE_TEST,BAISC_TEST){
     ASSERT_EQ(page_ptr->GetCatalogueOffset(),mini_db::MAX_CONTENT_SIZE-600);
     
     int16_t start;
-    int16_t end;
-    page_ptr->Find(14,&start,&end);
-    ASSERT_EQ(start,5);
-    ASSERT_EQ(end,10);
+    int16_t length;
+    for(int i = 0;i<100;i++){
+        page_ptr->Find(i*12+1,&start,&length);
+        ASSERT_EQ(start,i*5);
+        LOG_DEBUG("hello");
+        ASSERT_EQ(length,5);
+    }
 }

@@ -1,9 +1,11 @@
 #include "common/config.h"
+#include "common/logger.h"
 #include <cstring>
 namespace mini_db{
 
 static const int32_t CONTENT_HEADER_SIZE = 16;
 static const int32_t MAX_CONTENT_SIZE = PAGE_SIZE - CONTENT_HEADER_SIZE;
+static const int32_t SLOT_SIZE = 6;
 
 class Page{
 
@@ -34,7 +36,7 @@ class Page{
     
     bool Append(duration_t duration,char* slice);
     
-    bool Find(duration_t duration,int16_t * const start,int16_t * const end);
+    bool Find(duration_t duration,int16_t * const start,int16_t * const length);
     
     private:        
     
