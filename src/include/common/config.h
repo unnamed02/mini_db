@@ -9,7 +9,7 @@ static const int INVALID_FRAME_ID = -1;
 using page_id_t = int32_t;     // page id type
 static const int PAGE_ID_SIZE = sizeof(page_id_t);
 
-using farme_id_t = int32_t;     //frame id type
+using frame_id_t = int32_t;     //frame id type
 
 //since mp4 has 4 bytes of duration and 4 bytes of time_scale 
 //we use uint32_t to represent them

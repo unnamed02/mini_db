@@ -40,8 +40,8 @@ char* Index::GetSlice(duration_t duration){
             return dst;
         }
         return nullptr;
-    }else{
-        int32_t frame_id = this->GetFrame(duration);
+    }else if (buffer_size_ > 1){
+        frame_id_t frame_id = this->GetFrame(duration);
         if(frame_id != INVALID_FRAME_ID){
             auto pg = reinterpret_cast<Page*>(buffer_[frame_id].GetData());
             if(pg->Find(duration,&start,&length)){
@@ -49,17 +49,41 @@ char* Index::GetSlice(duration_t duration){
                 memmove(dst,pg->content_ + start,length);
                 return dst; 
             }
+            LOG_ERROR("shouldn't get here, checkout GetFrame");
+            abort();
         }
         
         page_id_t page_id = this->GetPage(duration);
         if(page_id == INVALID_PAGE_ID){
             return nullptr;
-        }else{
-            
         }
-
+        frame_id_t free_frame = this->GetFree();
+        disk_manager_ptr_->ReadPage(page_id,buffer_[free_frame].GetData());
+        auto pg = reinterpret_cast<Page*>(buffer_[free_frame].GetData());
+        if(pg->Find(duration,&start,&length)){
+            char *dst = (char*)malloc(length);
+            memmove(dst,pg->content_ + start,length);
+            return dst;
+        }
+        LOG_ERROR("shoud't get here,checkout GetPage");
+        abort();
+    }else{
+        page_id_t page_id = this->GetPage(duration);
+        if(page_id == INVALID_PAGE_ID){
+            return nullptr;
+        }
+        char temp_buffer[PAGE_SIZE];
+        disk_manager_ptr_->ReadPage(page_id,temp_buffer);
+        auto pg = reinterpret_cast<Page*>(temp_buffer);
+        if(pg->Find(duration,&start,&length)){
+            char *dst = (char*)malloc(length);
+            memmove(dst,pg->content_ + start,length);
+            return dst;
+        }
+        LOG_ERROR("shoud't get here,checkout GetPage");
+        abort();
     }
-    
+    return nullptr;
 }
 
 
@@ -83,10 +107,15 @@ page_id_t Index::WriteSlice(const duration_t duration,char* slice){
 }
 
 // TODO: use STL datastruct to record this
-farme_id_t Index::GetFrame(const duration_t duration){
+frame_id_t Index::GetFrame(const duration_t duration){
     for(int i = 1;i<buffer_size_;i++){
         
     }
+}
+
+
+frame_id_t Index::GetFree(){
+
 }
 
 Index::~Index(){

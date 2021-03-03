@@ -38,7 +38,6 @@ class Index{
         free(content);
     }
     
-    farme_id_t GetFrame(const duration_t);
 
 
     protected:
@@ -61,8 +60,14 @@ class Index{
     uint32_t buffer_size_;
 
     Frame* buffer_;
+
+    frame_id_t GetFrame(const duration_t);
+    
+    frame_id_t GetFree();
     
     private:
+    
+
     //index shouldn't be copiable
     //and you are NOT allowed to use its default construct function
     Index(const Index&);
