@@ -2,11 +2,16 @@
 
 #include <string>
 #include <assert.h>
+#include <memory>
 #include "disk/disk_manager.h"
 #include "page/frame.h"
 #include "common/config.h"
 #include "common/logger.h"
 namespace mini_db{
+
+using std::bad_alloc;
+using std::shared_ptr;
+
 class Index{
     public:
 
@@ -37,8 +42,6 @@ class Index{
     inline void FreeSlice(char* const content){
         free(content);
     }
-    
-
 
     protected:
 
@@ -64,7 +67,7 @@ class Index{
     frame_id_t GetFrame(const duration_t);
     
     frame_id_t GetFree();
-    
+
     private:
     
 

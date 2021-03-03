@@ -12,7 +12,12 @@ Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages
     if(buffer_size_ == 0){
         buffer_size_ = 1;
     }
-    buffer_ = new Frame[buffer_size_];
+    try{
+        buffer_ = new Frame[buffer_size_];
+    }catch(bad_alloc){
+        LOG_ERROR("out of memmory");
+        abort(); 
+    }
     AllocNewPage();
     auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
     pg->Init(0,cur_page_id_);
