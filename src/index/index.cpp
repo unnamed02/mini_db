@@ -9,7 +9,10 @@ Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages
     cur_page_id_(0),
     cur_duration_(0),
     buffer_size_(buffer_size){
-    buffer_ = new Frame[buffer_size];
+    if(buffer_size_ == 0){
+        buffer_size_ = 1;
+    }
+    buffer_ = new Frame[buffer_size_];
     AllocNewPage();
     auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
     pg->Init(0,cur_page_id_);
@@ -28,9 +31,10 @@ page_id_t Index::AllocNewPage(){
 //and then find in the rest buffer
 char* Index::GetSlice(duration_t duration){
     int16_t start,length;
-    if(duration > buffer_[0].GetStart()){
+    if(duration >= buffer_[0].GetStart()){
         auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
         if(pg->Find(duration,&start,&length)){
+            // LOG_DEBUG("start : %d length : %d",start,length);
             char *dst = (char*)malloc(length);
             memmove(dst,pg->content_ + start,length);
             return dst;

@@ -9,14 +9,17 @@ TEST(BINARY_INDEX_TEST,BASIC_TEST){
     char str[] = "123456";
     index_ptr->WriteSlice(12,str);
     
-    char * dst = index_ptr->GetSlice(13);
+    char * dst = index_ptr->GetSlice(12);
     ASSERT_EQ(dst,nullptr);
 
-    dst = index_ptr->GetSlice(11);
-    for(int i = 0;i<6;i++){
-        ASSERT_EQ(dst[i],str[i]);
+    dst = index_ptr->GetSlice(0);
+    ASSERT_NE(dst,nullptr);
+    if(dst){
+        for(int i = 0;i<6;i++){
+            ASSERT_EQ(dst[i],str[i]);
+        }
+        index_ptr->FreeSlice(dst);
     }
-    index_ptr->FreeSlice(dst);
 
     delete index_ptr;
     delete disk_manager_ptr;

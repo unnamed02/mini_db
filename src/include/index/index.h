@@ -31,7 +31,6 @@ class Index{
     and if use that GetLength style api it will neither lead to swapout/swapin or holding
     that page for a long time which will definetedly make it way too slow 
     */
-
     char* GetSlice(const duration_t);
 
     //free function
