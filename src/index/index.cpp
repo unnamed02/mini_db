@@ -30,7 +30,7 @@ page_id_t Index::AllocNewPage(){
     }
     buffer_[0].Init(cur_page_id_,cur_duration_,0);
     auto pg_ptr = reinterpret_cast<Page*>(buffer_[0].GetData());
-    pg_ptr->Init(cur_page_id_,cur_page_id_);
+    pg_ptr->Init(cur_page_id_,cur_duration_);
     return cur_page_id_;
 }
 
@@ -67,6 +67,9 @@ char* Index::GetSlice(duration_t duration){
         frame_id_t free_frame = this->GetFree();
         disk_manager_ptr_->ReadPage(page_id,buffer_[free_frame].GetData());
         auto pg = reinterpret_cast<Page*>(buffer_[free_frame].GetData());
+
+        buffer_[free_frame].Init(pg->GetPageId(),pg->GetStart(),pg->GetDuration());
+        
         if(pg->Find(duration,&start,&length)){
             char *dst = (char*)malloc(length);
             memmove(dst,pg->content_ + start,length);
