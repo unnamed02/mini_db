@@ -15,6 +15,9 @@ page_id_t BinaryIndex::GetPage(const duration_t duration){
     //an example of how you could get a page
     //read page 1
     
+    //make sure your finding algorithm is accurate
+    //so that you NEEDN'T do disk IO
+
     // page_id_t page_to_read = 1; 
     // char temp_buffer[PAGE_SIZE];
     // this->disk_manager_ptr_->ReadPage(page_to_read,temp_buffer);

@@ -39,7 +39,7 @@ class Page{
     //FOR TEST ONLY
     inline char* GetContent(){return content_;}
 
-    inline void Init(const duration_t start,const page_id_t page_id){
+    inline void Init(const page_id_t page_id,const duration_t start){
         start_ = start,
         page_id_ = page_id,
         duration_ = 0,

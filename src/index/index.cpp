@@ -29,6 +29,8 @@ page_id_t Index::AllocNewPage(){
         return INVALID_PAGE_ID;
     }
     buffer_[0].Init(cur_page_id_,cur_duration_,0);
+    auto pg_ptr = reinterpret_cast<Page*>(buffer_[0].GetData());
+    pg_ptr->Init(cur_page_id_,cur_page_id_);
     return cur_page_id_;
 }
 
