@@ -1,4 +1,5 @@
 #include "index/index.h"
+#include <vector>
 
 namespace mini_db{
     class BinaryIndex : public Index{
@@ -13,6 +14,7 @@ namespace mini_db{
         page_id_t GetPage(const duration_t);
 
         private:
+        std::vector<duration_t> end_time_list_for_pages;
 
     };
 }
