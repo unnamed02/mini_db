@@ -61,7 +61,7 @@ char* Index::GetSlice(duration_t duration){
         }
         return nullptr;
     }else if (buffer_size_ > 1){
-        frame_id_t frame_id = this->GetFrame(duration);
+        frame_id_t frame_id = GetFrame(duration);
         if(frame_id != INVALID_FRAME_ID){
             auto pg = reinterpret_cast<Page*>(buffer_[frame_id].GetData());
             if(pg->Find(duration,&start,&length)){
@@ -73,11 +73,11 @@ char* Index::GetSlice(duration_t duration){
             abort();
         }
         
-        page_id_t page_id = this->GetPage(duration);
+        page_id_t page_id = GetPage(duration);
         if(page_id == INVALID_PAGE_ID){
             return nullptr;
         }
-        frame_id_t free_frame = this->GetFree();
+        frame_id_t free_frame = GetFree();
         disk_manager_ptr_->ReadPage(page_id,buffer_[free_frame].GetData());
         auto pg = reinterpret_cast<Page*>(buffer_[free_frame].GetData());
 
@@ -91,7 +91,7 @@ char* Index::GetSlice(duration_t duration){
         LOG_ERROR("shoud't get here,checkout GetPage");
         abort();
     }else{
-        page_id_t page_id = this->GetPage(duration);
+        page_id_t page_id = GetPage(duration);
         if(page_id == INVALID_PAGE_ID){
             return nullptr;
         }
