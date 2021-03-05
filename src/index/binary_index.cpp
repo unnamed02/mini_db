@@ -15,6 +15,7 @@ page_id_t BinaryIndex::WriteSlice(const duration_t duration,char* const content)
             this->end_time_list_for_pages.push_back(before_duration);
         }
     }
+    return update_page_id;
 }
 
 page_id_t BinaryIndex::GetPage(const duration_t duration){
