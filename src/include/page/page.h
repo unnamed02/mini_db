@@ -19,6 +19,8 @@ static inline int32_t CONTENT_HEADER_SIZE(){
         size = ((size/PAGE_OFFSET_SIZE)+3)*PAGE_OFFSET_SIZE;
     }
 
+    size += 1;
+
     return size;
 }
 
@@ -36,8 +38,27 @@ class Page{
     
     inline page_id_t GetPageId(){return page_id_;}
 
+    inline bool IsLeafPage(){
+        return perm_ & LEAF_PAGE;
+    }
+
     //FOR TEST ONLY
     inline char* GetContent(){return content_;}
+
+    inline void Init(const page_id_t page_id,const duration_t start,bool is_leaf,bool is_root){
+        Init(page_id,start);
+        if(is_leaf){
+            perm_ |= LEAF_PAGE;
+        }else{
+            perm_ &= !LEAF_PAGE;
+        }
+        
+        if(is_root){
+            perm_ |= ROOT_PAGE;
+        }else{
+            perm_ &= !ROOT_PAGE;
+        }
+    };
 
     inline void Init(const page_id_t page_id,const duration_t start){
         start_ = start,
@@ -54,9 +75,13 @@ class Page{
     inline int32_t GetCatalogueOffset(){return catalogue_offset_;}
 
     
-    bool Append(const duration_t duration,char* const slice);
+    bool Append(const duration_t,char* const slice);
+
+    bool Append(const duration_t,const page_id_t page_id);
     
-    bool Find(const duration_t duration,page_offset_t * const start,page_offset_t * const length);
+    bool Find(const duration_t,page_offset_t * const start,page_offset_t * const length);
+
+    bool Find(const duration_t,page_id_t* const page_id);
     
     private:        
     
@@ -67,7 +92,9 @@ class Page{
         
     page_offset_t       content_offset_;
     page_offset_t       catalogue_offset_;
-        
+    
+    char           perm_;
+
     char           content_[0]{};
     };
 }

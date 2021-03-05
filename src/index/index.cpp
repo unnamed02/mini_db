@@ -18,20 +18,33 @@ Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages
         LOG_ERROR("out of memmory");
         abort(); 
     }
-    AllocNewPage();
-    auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
-    pg->Init(0,cur_page_id_);
+    AllocNewPage(true,true);
 }
 
 page_id_t Index::AllocNewPage(){
-    this->cur_page_id_ = this->disk_manager_ptr_ -> AllocatePage();
-    if(cur_page_id_ > max_pages_){
-        return INVALID_PAGE_ID;
-    }
-    buffer_[0].Init(cur_page_id_,cur_duration_,0);
+    Alloc();
+
     auto pg_ptr = reinterpret_cast<Page*>(buffer_[0].GetData());
     pg_ptr->Init(cur_page_id_,cur_duration_);
     return cur_page_id_;
+}
+
+page_id_t Index::AllocNewPage(bool is_leaf,bool is_root){
+    Alloc();
+
+    auto pg_ptr = reinterpret_cast<Page*>(buffer_[0].GetData());
+    pg_ptr->Init(cur_page_id_,cur_duration_,is_leaf,is_root);
+    return cur_page_id_;
+}
+
+void Index::Alloc(){
+    auto res = disk_manager_ptr_ -> AllocatePage();
+    if(cur_page_id_ > max_pages_){
+        LOG_ERROR("bad alloc: cur_page_id_ > max_pages");
+        return;
+    }
+    buffer_[0].Init(cur_page_id_,cur_duration_,0);
+    cur_page_id_ = res;
 }
 
 //should find in the buffer_[0],the last page
@@ -104,6 +117,7 @@ page_id_t Index::WriteSlice(const duration_t duration,char* slice){
         cur_duration_ += duration;
         return cur_page->GetPageId();
     }else{
+        // LOG_DEBUG("changing page");
         disk_manager_ptr_->WritePage(cur_page->GetPageId(),buffer_[0].GetData());
         AllocNewPage();
         auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());

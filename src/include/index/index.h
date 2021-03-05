@@ -21,6 +21,10 @@ class Index{
 
     page_id_t AllocNewPage();
 
+    page_id_t AllocNewPage(bool is_leaf,bool is_root);
+
+    void Alloc();
+
     virtual page_id_t GetPage(const duration_t) = 0;
     
     virtual page_id_t WriteSlice(const duration_t,char* const content);

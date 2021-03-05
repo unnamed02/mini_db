@@ -6,6 +6,9 @@ static const int PAGE_SIZE = 4096;
 static const int INVALID_PAGE_ID = -1;
 static const int INVALID_FRAME_ID = -1;
 
+static const char LEAF_PAGE = 1;
+static const char ROOT_PAGE = 2;
+
 using page_id_t = int32_t;     // page id type
 static const int PAGE_ID_SIZE = sizeof(page_id_t);
 
