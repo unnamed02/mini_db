@@ -18,7 +18,26 @@ Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages
         LOG_ERROR("out of memmory");
         abort(); 
     }
-    AllocNewPage(true,true);
+    AllocNewPage();
+}
+
+Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages,uint32_t buffer_size,bool is_leaf,bool is_root):
+    disk_manager_ptr_(disk_manager_ptr),
+    scale_(scale),
+    max_pages_(max_pages),
+    cur_page_id_(0),
+    cur_duration_(0),
+    buffer_size_(buffer_size){
+    if(buffer_size_ == 0){
+        buffer_size_ = 1;
+    }
+    try{
+        buffer_ = new Frame[buffer_size_];
+    }catch(bad_alloc){
+        LOG_ERROR("out of memmory");
+        abort(); 
+    }
+    AllocNewPage(is_leaf,is_root);
 }
 
 page_id_t Index::AllocNewPage(){

@@ -17,6 +17,8 @@ class Index{
 
     Index(DiskManager* disk_manager,time_scale_t scale,uint32_t max_pages,uint32_t buffer_size);
 
+    Index(DiskManager* disk_manager,time_scale_t scale,uint32_t max_pages,uint32_t buffer_size,bool is_leaf,bool is_root);
+    
     virtual ~Index();
 
     page_id_t AllocNewPage();
