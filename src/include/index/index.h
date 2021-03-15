@@ -10,7 +10,6 @@
 namespace mini_db{
 
 using std::bad_alloc;
-using std::shared_ptr;
 
 class Index{
     public:
@@ -31,8 +30,6 @@ class Index{
     
     virtual page_id_t WriteSlice(const duration_t,char* const content);
 
-    size_t GetSliceLength(const duration_t);
-
     /* 
     since getSlice return a dynamic alloced char*,you should free that memory after use.
     that free function is as follow.
@@ -42,7 +39,7 @@ class Index{
     and if use that GetLength style api it will neither lead to swapout/swapin or holding
     that page for a long time which will definetedly make it way too slow 
     */
-    char* GetSlice(const duration_t);
+    virtual char* GetSlice(const duration_t);
 
     //free function
     inline void FreeSlice(char* const content){
