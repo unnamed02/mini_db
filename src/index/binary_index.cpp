@@ -32,11 +32,11 @@ page_id_t BinaryIndex::GetPage(const duration_t duration){
 
     //and now you can use pg_ptr to get that page's data 
 
-    if(duration >= this->end_time_list_for_pages_.back() || duration < 0){
+    if(duration >= end_time_list_for_pages_.back() || duration < 0){
         // out of the content
         return INVALID_PAGE_ID;
     }else{
-        //just return std::lower_bound(end_time_list_for_pages_.begin(),end_time_list_for_pages_.end(),duration) is ok
+        //just return std::upper_bound(end_time_list_for_pages_.begin(),end_time_list_for_pages_.end(),duration)-end_time_list_for_pages_.begin() -1  is ok
         page_id_t low = 0, high = end_time_list_for_pages_.size()-1, mid;
 	    while (low <= high)
 	    {
