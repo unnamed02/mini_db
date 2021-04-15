@@ -8,9 +8,9 @@ static inline int32_t CONTENT_HEADER_SIZE(){
     size += 2 * DURATION_SIZE;
 
     if(size % PAGE_ID_SIZE == 0){
-        size += PAGE_ID_SIZE;
+        size += PAGE_ID_SIZE * 2;
     }else{
-        size = ((size/PAGE_ID_SIZE)+2)*PAGE_ID_SIZE;
+        size = ((size/PAGE_ID_SIZE)+3)*PAGE_ID_SIZE;
     }
 
     if(size % PAGE_OFFSET_SIZE == 0){
@@ -89,6 +89,7 @@ class Page{
     duration_t     duration_;
 
     page_id_t      page_id_;
+    page_id_t      parent_page_id_;
         
     page_offset_t       content_offset_;
     page_offset_t       catalogue_offset_;

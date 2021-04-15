@@ -15,6 +15,7 @@ namespace mini_db{
         page_id_t GetPage(const duration_t);
 
         private:
+        
         std::vector<duration_t> end_time_list_for_pages_;
 
     };

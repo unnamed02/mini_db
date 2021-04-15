@@ -31,12 +31,12 @@ class Index{
     virtual page_id_t WriteSlice(const duration_t,char* const content);
 
     /* 
-    since getSlice return a dynamic alloced char*,you should free that memory after use.
+    since getSlice return a dynamic alloced char* , you should free that memory after use.
     that free function is as follow.
     the reason why we use GetSlice and FreeSlice instead of 
     using GetLength and GetSlice style api that allows you manage the memmory by yourself is that
     the page is stored in a lru buffer
-    and if use that GetLength style api it will neither lead to swapout/swapin or holding
+    and if use that GetLength style api it will either lead to swapout/swapin or holding
     that page for a long time which will definetedly make it way too slow 
     */
     virtual char* GetSlice(const duration_t);
@@ -70,17 +70,12 @@ class Index{
     frame_id_t GetFrame(const duration_t);
     
     frame_id_t GetFree();
-
-    private:
     
-
     //index shouldn't be copiable
-    //and you are NOT allowed to use its default construct function
-    Index(const Index&);
+    Index(const Index&) = delete;
 
-    Index& operator=(const Index&);
+    Index& operator=(const Index&) = delete;
     
-    Index();
 };
 
 }
