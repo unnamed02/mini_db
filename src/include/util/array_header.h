@@ -1,19 +1,23 @@
+#pragma once
+
 #include "common/config.h"
 #include "util/array_block.h"
 
 namespace mini_db{
 
-template<typename key_type,typename value_type>
+template<typename KeyType,typename ValueType>
 class ArrayHeader{
 
     public:
 
-    virtual value_type find(key_type key) = 0;
+    virtual pair<KeyType,ValueType>& operator[](int32_t i);
 
-    virtual bool insert(key_type key,value_type value);
+    virtual ValueType binary_search(KeyType key) = 0;
+
+    virtual bool push_back(KeyType key,ValueType value);
 
     virtual bool persist();
-
+    
 };
 
 }

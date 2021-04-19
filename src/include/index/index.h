@@ -34,11 +34,12 @@ class Index{
     since getSlice return a dynamic alloced char* , you should free that memory after use.
     that free function is as follow.
     the reason why we use GetSlice and FreeSlice instead of 
-    using GetLength and GetSlice style api that allows you manage the memmory by yourself is that
+    using GetLength and GetSlice style api that allows you manage the memmory yourself is that
     the page is stored in a lru buffer
     and if use that GetLength style api it will either lead to swapout/swapin or holding
     that page for a long time which will definetedly make it way too slow 
     */
+   
     virtual char* GetSlice(const duration_t);
 
     //free function

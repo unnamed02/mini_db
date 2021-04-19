@@ -24,6 +24,10 @@ using time_scale_t = uint32_t;
 using page_offset_t = int16_t;
 static const int PAGE_OFFSET_SIZE = sizeof(page_offset_t);
 
+//make sure PAGE_SIZE can be divided evenly by BLOCK_OFFSET_SIZE
+using block_offset_t = int16_t;
+static const int BLOCK_OFFSET_SIZE = sizeof(block_offset_t);
+
 static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
 
 }  // namespace bustub

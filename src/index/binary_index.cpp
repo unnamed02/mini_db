@@ -61,7 +61,7 @@ page_id_t BinaryIndex::GetPage(const duration_t duration){
 
 BinaryIndex::BinaryIndex(DiskManager* disk_manager,time_scale_t scale,uint32_t max_pages,uint32_t buffer_size):
     Index(disk_manager,scale,max_pages,buffer_size),
-    end_time_list_for_pages_(0){
+    end_time_list_for_pages_(8){
     
 }
 

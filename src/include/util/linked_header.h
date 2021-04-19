@@ -1,3 +1,4 @@
+#pragma once
 namespace mini_db{
 
 template<typename KeyType,typename ValueType>

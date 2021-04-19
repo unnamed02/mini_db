@@ -1,3 +1,5 @@
+#pragma once
+
 #include "index/index.h"
 #include <algorithm>
 #include <vector>
