@@ -4,7 +4,7 @@ namespace mini_db{
 
     bool Page::Append(const duration_t duration,char* const slice){
         size_t length = strlen(slice);
-        // LOG_DEBUG("content + length : %d catalogue_offset - SLOT_SIZE : %d",(int)(content_offset_ + length),(int)(catalogue_offset_ - SLOT_SIZE));
+        LOG_DEBUG("content + length : %d catalogue_offset - SLOT_SIZE : %d",(int)(content_offset_ + length),(int)(catalogue_offset_ - SLOT_SIZE));
         if(content_offset_ + length > catalogue_offset_ - SLOT_SIZE){
             return false;
         }

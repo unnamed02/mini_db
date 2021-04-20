@@ -139,6 +139,8 @@ page_id_t Index::WriteSlice(const duration_t duration,char* slice){
     }else{
         LOG_DEBUG("changing page writing page : %d to disk",cur_page->GetPageId());
         disk_manager_ptr_->WritePage(cur_page->GetPageId(),buffer_[0].GetData());
+        
+        cur_page->Clear();
         AllocNewPage();
         auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
         if(!cur_page->Append(duration,slice)){
@@ -163,9 +165,10 @@ frame_id_t Index::GetFree(){
 }
 
 Index::~Index(){
-    //TODO:
-    //should wrtieback all the frame's data
     
+    auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    disk_manager_ptr_->WritePage(cur_page->GetPageId(),buffer_[0].GetData());
+
     delete []buffer_;
 }
 

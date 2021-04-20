@@ -30,4 +30,6 @@ static const int BLOCK_OFFSET_SIZE = sizeof(block_offset_t);
 
 static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
 
+static const block_offset_t NOT_FOUND_OFFSET = -1; 
+
 }  // namespace bustub

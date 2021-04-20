@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common/config.h"
-#include "util/array_block.h"
+#include "page/array_block.h"
 
 namespace mini_db{
 
@@ -10,13 +10,13 @@ class ArrayHeader{
 
     public:
 
-    virtual pair<KeyType,ValueType>& operator[](int32_t i);
+    virtual pair<KeyType,ValueType>& operator[](block_offset_t i);
 
-    virtual ValueType binary_search(KeyType key) = 0;
+    virtual block_offset_t Find(KeyType key) = 0;
 
-    virtual bool push_back(KeyType key,ValueType value);
+    virtual bool PushBack(KeyType key,ValueType value);
 
-    virtual bool persist();
+    virtual bool Persist();
     
 };
 

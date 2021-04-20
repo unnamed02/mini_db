@@ -70,6 +70,10 @@ class Page{
         catalogue_offset_ = MAX_CONTENT_SIZE;
     };
 
+    inline void Clear(){
+        memset(content_,0,PAGE_SIZE);
+    }
+
     virtual ~Page();
 
     inline int32_t GetOffset(){return content_offset_;}
