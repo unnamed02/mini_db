@@ -17,8 +17,10 @@ class BinarySearchArray{
 
     DiskManager* disk_manager_ptr_;
 
+    int32_t size_;
+
     public:
-    BinarySearchArray(ArrayHeader<KeyType,void*>* header_ptr,DiskManager* disk_manager_){
+    BinarySearchArray(ArrayHeader<KeyType,void*>* header_ptr,DiskManager* disk_manager_ptr){
         header_ptr_ = header_ptr;
         disk_manager_ptr_ = disk_manager_ptr;
         auto new_block_ptr = new ArrayBlock<KeyType>();
@@ -76,7 +78,9 @@ KeyType& BinarySearchArray<KeyType>::operator[](block_offset_t n){
 
 template<typename KeyType>
 bool BinarySearchArray<KeyType>::Persist(){
+    for(int i = 0;i<header_ptr_->Size();i++){
 
+    }
 }
 
 }
