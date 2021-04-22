@@ -19,7 +19,7 @@
 
 #include "common/config.h"
 
-namespace mini_db {
+namespace mini_dbm {
 
 /**
  * DiskManager takes care of the allocation and deallocation of pages within a database. It performs the reading and

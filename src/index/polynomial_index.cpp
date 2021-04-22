@@ -1,7 +1,7 @@
 #include "index/polynomial_index.h"
 #include "page/page.h"
 
-namespace mini_db{
+namespace mini_dbm{
 
 page_id_t PolynomialIndex::WriteSlice(const duration_t duration,char* const content){
     

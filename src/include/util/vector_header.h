@@ -1,11 +1,15 @@
 #pragma once
-#include "util/array_header.h"
 #include <vector>
+#include <algorithm>
+#include "util/array_header.h"
 
-namespace mini_db{
+
+
+namespace mini_dbm{
 
 using std::vector;
 using std::make_pair;
+using std::upper_bound;
 
 template<typename KeyType,typename ValueType>
 class VectorHeader : public ArrayHeader<KeyType,ValueType>{
@@ -18,19 +22,21 @@ class VectorHeader : public ArrayHeader<KeyType,ValueType>{
 
     };
 
-    inline pair<KeyType,ValueType>& operator[](block_offset_t i){
+    inline pair<KeyType,ValueType>& operator[](size_t i){
         return vector_[i];
     }
 
-    block_offset_t Find(const KeyType& key);
+    size_t Find(const KeyType& key){
+        size_t upper_bound = upper_bound()
+    };
 
-    bool Insert(const KeyType& key,const ValueType& value){
+    bool inline PushBack(const KeyType& key,const ValueType& value){
         vector_.push_back(make_pair(key,value));
     }
 
-    bool Persist();
+    bool Persist(){};
 
-    inline size_t Size(){
+    size_t inline Size(){
         return vector_.size();
     }
 

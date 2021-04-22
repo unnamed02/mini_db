@@ -6,12 +6,12 @@
 #include "page/array_block.h"
 #include "disk/disk_manager.h"
 
-namespace mini_db{
+namespace mini_dbm{
 
 template<typename KeyType>
 class BinarySearchArray{
     private:
-    ArrayHeader<KeyType,void*>* header_ptr_;
+    ArrayHeader<KeyType,ArrayBlock<KeyType>*>* header_ptr_;
 
     ArrayBlock<KeyType>* cur_block_ptr_;
 
@@ -20,26 +20,31 @@ class BinarySearchArray{
     int32_t size_;
 
     public:
-    BinarySearchArray(ArrayHeader<KeyType,void*>* header_ptr,DiskManager* disk_manager_ptr){
+    BinarySearchArray(ArrayHeader<KeyType,ArrayBlock<KeyType>*>* header_ptr,DiskManager* disk_manager_ptr){
         header_ptr_ = header_ptr;
         disk_manager_ptr_ = disk_manager_ptr;
         auto new_block_ptr = new ArrayBlock<KeyType>();
-        
+        header_ptr->PushBack(0,new_block_ptr);
+        cur_block_ptr = new_block_ptr;
     }
 
-    block_offset_t Find(KeyType key);
+    size_t Find(KeyType key);
 
-    KeyType& operator[](block_offset_t offset);
+    KeyType& operator[](size_t offset);
 
     bool PushBack(KeyType start);
 
-    bool Persist();
+    void Persist();
 
 };
 
 
 template<typename KeyType>  
 bool BinarySearchArray<KeyType>::PushBack(KeyType start){
+    if(!cur_block_ptr_){
+        LOG_ERROR("empty cur_block_ptr");
+    }
+    
     if(cur_block_ptr_->PushBack(start)){
         return true;
     }
@@ -56,8 +61,8 @@ bool BinarySearchArray<KeyType>::PushBack(KeyType start){
 }
 
 template<typename KeyType>
-block_offset_t BinarySearchArray<KeyType>::Find(KeyType key){
-    block_offset_t head_offset = header_ptr_->Find(key);
+size_t BinarySearchArray<KeyType>::Find(KeyType key){
+    size_t head_offset = header_ptr_->Find(key);
     if(head_offset >= 0){
         pair<KeyType,void*> head_pair = (*header_ptr_)[head_offset];
         ArrayBlock<KeyType>* block_ptr = reinterpret_cast<ArrayBlock<KeyType>*>(head_pair.second());
@@ -67,7 +72,7 @@ block_offset_t BinarySearchArray<KeyType>::Find(KeyType key){
 }
 
 template<typename KeyType>
-KeyType& BinarySearchArray<KeyType>::operator[](block_offset_t n){
+KeyType& BinarySearchArray<KeyType>::operator[](size_t n){
     pair<KeyType,void*> head_pair = (*header_ptr_)[n / ArrayBlock<KeyType>::CONTENT_NUM()];
     if(head_pair.second()){
         ArrayBlock<KeyType>* block_ptr = reinterpret_cast<ArrayBlock<KeyType>*>(head_pair.second());
@@ -77,9 +82,10 @@ KeyType& BinarySearchArray<KeyType>::operator[](block_offset_t n){
 }
 
 template<typename KeyType>
-bool BinarySearchArray<KeyType>::Persist(){
+void BinarySearchArray<KeyType>::Persist(){
     for(int i = 0;i<header_ptr_->Size();i++){
-
+        auto char_ptr = reinterpret_cast<char*>((*header_ptr_)[i].second());
+        this->disk_manager_ptr_->WritePage(i,char_ptr);
     }
 }
 

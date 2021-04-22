@@ -6,21 +6,21 @@
 #include <gtest/gtest.h>
 
 TEST(BINARY_INDEX_TEST,BASIC_TEST){
-    auto disk_manager_ptr = new mini_db::DiskManager("test.db");
+    auto disk_manager_ptr = new mini_dbm::DiskManager("test.db");
 
     int t;
-    mini_db::Index* index_ptr = nullptr;
+    mini_dbm::Index* index_ptr = nullptr;
     printf("index type ? \n1 stand for binary index,2 for b plus tree index,3 for polynomial index\n");
     scanf("%d",&t);
     switch (t){
     case 1:
-        index_ptr = new mini_db::BinaryIndex(disk_manager_ptr,10,10,6);
+        index_ptr = new mini_dbm::BinaryIndex(disk_manager_ptr,10,10,6);
         break;
     case 2:
-        index_ptr = new mini_db::BPlusTreeIndex(disk_manager_ptr,10,10,6);
+        index_ptr = new mini_dbm::BPlusTreeIndex(disk_manager_ptr,10,10,6);
         break;
     case 3:
-        index_ptr = new mini_db::PolynomialIndex(disk_manager_ptr,10,10,6);
+        index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
     default:
         printf("invalid input\n");
         return;
@@ -45,29 +45,29 @@ TEST(BINARY_INDEX_TEST,BASIC_TEST){
 }
 
 TEST(BINARY_INDEX_TEST,CHANGE_PAGE_TEST){
-    auto disk_manager_ptr = new mini_db::DiskManager("test.db");
+    auto disk_manager_ptr = new mini_dbm::DiskManager("test.db");
 
     int t;
-    mini_db::Index* index_ptr = nullptr;
+    mini_dbm::Index* index_ptr = nullptr;
     printf("index type ? \n1 stand for binary index,2 for b plus tree index,3 for polynomial index\n");
     scanf("%d",&t);
     switch (t){
     case 1:
-        index_ptr = new mini_db::BinaryIndex(disk_manager_ptr,10,10,6);
+        index_ptr = new mini_dbm::BinaryIndex(disk_manager_ptr,10,10,6);
         break;
     case 2:
-        index_ptr = new mini_db::BPlusTreeIndex(disk_manager_ptr,10,10,6);
+        index_ptr = new mini_dbm::BPlusTreeIndex(disk_manager_ptr,10,10,6);
         break;
     case 3:
-        index_ptr = new mini_db::PolynomialIndex(disk_manager_ptr,10,10,6);
+        index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
     default:
         printf("invalid input\n");
         return;
     }
 
-    int n = mini_db::MAX_CONTENT_SIZE;
+    int n = mini_dbm::MAX_CONTENT_SIZE;
     char str[] = "12345678";
-    n /= (8+mini_db::SLOT_SIZE);
+    n /= (8+mini_dbm::SLOT_SIZE);
     
     auto pg_id = index_ptr->WriteSlice(12,str);
     for(int i = 1;i<n;i++){

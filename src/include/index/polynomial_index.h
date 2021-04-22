@@ -2,7 +2,7 @@
 
 #include "index/index.h"
 
-namespace mini_db{
+namespace mini_dbm{
 class PolynomialIndex : public Index{
         
     public:

@@ -7,7 +7,7 @@
 #include "page/frame.h"
 #include "common/config.h"
 #include "common/logger.h"
-namespace mini_db{
+namespace mini_dbm{
 
 using std::bad_alloc;
 

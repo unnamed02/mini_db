@@ -2,7 +2,7 @@
 
 #include "common/config.h"
 #include <cstring>
-namespace mini_db{
+namespace mini_dbm{
 
 class Frame{
 

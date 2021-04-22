@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <vector>
 
-namespace mini_db{
-    
+namespace mini_dbm{
+
 class BinaryIndex : public Index{
         
     public:

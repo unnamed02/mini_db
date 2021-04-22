@@ -1,6 +1,6 @@
 #include "index/binary_index.h"
 #include "page/page.h"
-namespace mini_db{
+namespace mini_dbm{
 
 page_id_t BinaryIndex::WriteSlice(const duration_t duration,char* const content){
     // use Index::WriteSlice(duration,content) to do the real job

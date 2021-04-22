@@ -36,7 +36,7 @@
 #include <ctime>
 #include <string>
 
-namespace mini_db {
+namespace mini_dbm {
 
 // https://blog.galowicz.de/2016/02/20/short_file_macro/
 using cstr = const char *;

@@ -4,7 +4,7 @@
 #include "disk/disk_manager.h"
 #include "page/array_block.h"
 
-namespace mini_db{
+namespace mini_dbm{
 
 template<typename KeyType,typename ValueType>
 class ArrayHeader{
@@ -21,18 +21,17 @@ public:
         size_ = 0;
     }
 
-    virtual pair<KeyType,ValueType>& operator[](block_offset_t i);
+    virtual pair<KeyType,ValueType>& operator[](size_t i){};
 
-    virtual block_offset_t Find(KeyType key) = 0;
+    virtual size_t Find(const KeyType& key) = 0;
 
-    virtual bool PushBack(KeyType key,ValueType value);
+    virtual bool PushBack(KeyType key,ValueType value){};
 
-    virtual bool Persist();
+    virtual bool Persist(){};
 
     virtual size_t Size(){
         return size_;
     };
     
 };
-
 }

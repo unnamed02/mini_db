@@ -3,17 +3,17 @@
 #include "common/config.h"
 #include <utility>
 
-namespace mini_db{
+namespace mini_dbm{
 
 using std::pair;
 
-static const int32_t CONTENT_SIZE = PAGE_SIZE - BLOCK_OFFSET_SIZE;
+static const int32_t CONTENT_SIZE = PAGE_SIZE - sizeof(size_t);
 
 template<typename KeyType>
 class ArrayBlock{
     private:
     
-    block_offset_t offset_;
+    size_t offset_;
 
     char content_[CONTENT_SIZE];
 
@@ -24,7 +24,7 @@ class ArrayBlock{
     public:
 
 
-    inline KeyType& operator[](block_offset_t n){
+    inline KeyType& operator[](size_t n){
         auto dst_ptr = reinterpret_cast<KeyType*>(content_ + n * sizeof(KeyType));
         return *dst_ptr;
     }
@@ -39,17 +39,17 @@ class ArrayBlock{
         return false;
     }
 
-    block_offset_t Find(const KeyType& key);
+    size_t Find(const KeyType& key);
 
 };
 
 template<typename KeyType>
-block_offset_t ArrayBlock<KeyType>::Find(const KeyType& key){
-    block_offset_t left = 0;
-    block_offset_t right = offset_ - 1;
+size_t ArrayBlock<KeyType>::Find(const KeyType& key){
+    size_t left = 0;
+    size_t right = offset_ - 1;
     
     while(right > left){
-        block_offset_t mid = (left + right) >> 1;
+        size_t mid = (left + right) >> 1;
         auto dst_ptr = reinterpret_cast<KeyType*>(content_ + mid * sizeof(KeyType));
         if(*dst_ptr >= key){
             right = mid;

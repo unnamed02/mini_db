@@ -2,7 +2,7 @@
 
 #include "index/index.h"
 
-namespace mini_db{
+namespace mini_dbm{
 
 class BPlusTreeIndex : public Index{
         

@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-namespace mini_db {
+namespace mini_dbm {
 
 static const int PAGE_SIZE = 4096;  
 static const int INVALID_PAGE_ID = -1;
@@ -24,12 +24,8 @@ using time_scale_t = uint32_t;
 using page_offset_t = int16_t;
 static const int PAGE_OFFSET_SIZE = sizeof(page_offset_t);
 
-//make sure PAGE_SIZE can be divided evenly by BLOCK_OFFSET_SIZE
-using block_offset_t = int16_t;
-static const int BLOCK_OFFSET_SIZE = sizeof(block_offset_t);
-
 static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
 
-static const block_offset_t NOT_FOUND_OFFSET = -1; 
+static const size_t NOT_FOUND_OFFSET = -1; 
 
 }  // namespace bustub

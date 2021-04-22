@@ -1,6 +1,6 @@
 #include "page/page.h"
 #include "iostream"
-namespace mini_db{
+namespace mini_dbm{
 
     bool Page::Append(const duration_t duration,char* const slice){
         size_t length = strlen(slice);

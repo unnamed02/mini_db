@@ -1,6 +1,6 @@
 #include "index/b_plus_tree_index.h"
 #include "page/page.h"
-namespace mini_db{
+namespace mini_dbm{
 
 page_id_t BPlusTreeIndex::WriteSlice(const duration_t duration,char* const content){
     

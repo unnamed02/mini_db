@@ -22,7 +22,7 @@
 #include "common/config.h"
 #include "common/logger.h"
 
-namespace mini_db {
+namespace mini_dbm {
 
 static char *buffer_used;
 

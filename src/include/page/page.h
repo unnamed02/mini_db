@@ -3,7 +3,7 @@
 #include "common/config.h"
 #include "common/logger.h"
 #include <cstring>
-namespace mini_db{
+namespace mini_dbm{
 
 static inline int32_t CONTENT_HEADER_SIZE(){
     int size = 0;

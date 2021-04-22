@@ -1,6 +1,8 @@
 #include "index/index.h"
 #include "page/page.h"
-namespace mini_db{
+
+namespace mini_dbm{
+
 
 Index::Index(DiskManager* disk_manager_ptr,time_scale_t scale,uint32_t max_pages,uint32_t buffer_size):
     disk_manager_ptr_(disk_manager_ptr),
