@@ -12,8 +12,7 @@ page_id_t LinearIndex::WriteSlice(const duration_t duration,char* const content)
     page_id_t update_page_id = Index::WriteSlice(duration,content);
     if(update_page_id != INVALID_PAGE_ID){
         if(update_page_id != before_page_id){
-            end_time_list_for_pages_.push_back(before_duration);
-            average_duration_ = (average_duration_ * (end_time_list_for_pages_.size() -1) + before_duration) / end_time_list_for_pages_.size();
+            average_duration_ = cur_duration_/update_page_id; 
         }
     }
     return update_page_id;
@@ -41,15 +40,6 @@ page_id_t LinearIndex::GetPage(const duration_t duration_stamp){
         pg_ptr = reinterpret_cast<Page*>(temp_buffer);
     }
     return page_to_read;
-}
-
-duration_t LinearIndex::CalcAverageDuration_(std::vector<duration_t> &end_time_list_for_pages_){
-    
-    duration_t sum=0;
-    for(auto i=end_time_list_for_pages_.begin(); i!=end_time_list_for_pages_.end(); i++){
-        sum += *i;
-    }
-    return sum / end_time_list_for_pages_.size();
 }
 
 

@@ -1,8 +1,9 @@
 #pragma once
 #include <stdint.h>
+#include <stddef.h>
 namespace mini_dbm {
 
-static const int PAGE_SIZE = 4096;  
+static const int PAGE_SIZE = 20480;  
 static const int INVALID_PAGE_ID = -1;
 static const int INVALID_FRAME_ID = -1;
 
