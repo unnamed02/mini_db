@@ -52,7 +52,6 @@ TEST(BINARY_INDEX_TEST,CHANGE_PAGE_TEST){
     auto disk_manager_ptr = new mini_dbm::DiskManager("test.db");
 
     int t;
-<<<<<<< HEAD
     mini_dbm::Index* index_ptr = nullptr;
     printf("index type ? \n1 stand for binary index,2 for b plus tree index,3 for polynomial index\n");
     scanf("%d",&t);
@@ -65,33 +64,14 @@ TEST(BINARY_INDEX_TEST,CHANGE_PAGE_TEST){
         break;
     case 3:
         index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
+    case 4:
+        index_ptr = new mini_dbm::LinearIndex(disk_manager_ptr,10,10,6);
     default:
         printf("invalid input\n");
         return;
     }
 
     int n = mini_dbm::MAX_CONTENT_SIZE;
-=======
-    mini_db::Index* index_ptr = nullptr;
-    // printf("index type ? \n1 stand for binary index,2 for b plus tree index,3 for polynomial index\n");
-    // scanf("%d",&t);
-    // switch (t){
-    // case 1:
-    //     index_ptr = new mini_db::BinaryIndex(disk_manager_ptr,10,10,6);
-    //     break;
-    // case 2:
-    //     index_ptr = new mini_db::BPlusTreeIndex(disk_manager_ptr,10,10,6);
-    //     break;
-    // case 3:
-    //     index_ptr = new mini_db::PolynomialIndex(disk_manager_ptr,10,10,6);
-    // default:
-    //     printf("invalid input\n");
-    //     return;
-    // }
-
-    index_ptr = new mini_db::BinaryIndex(disk_manager_ptr,10,10,6);
-    int n = mini_db::MAX_CONTENT_SIZE;
->>>>>>> bd446f3c6cb999a67de63776b1c74bd93747ddb9
     char str[] = "12345678";
     n /= (8+mini_dbm::SLOT_SIZE);
     
