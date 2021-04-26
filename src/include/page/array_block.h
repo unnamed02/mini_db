@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/config.h"
+#include "common/logger.h"
 #include <utility>
 
 namespace mini_dbm{
@@ -34,6 +35,7 @@ class ArrayBlock{
             auto dst_ptr = reinterpret_cast<KeyType*>(content_ + offset_ * sizeof(KeyType));
             *dst_ptr = key;
             offset_++;
+            LOG_DEBUG("pushing back %d",key);
             return true;
         }
         return false;

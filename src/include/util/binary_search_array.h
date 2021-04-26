@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 #include "common/config.h"
+#include "common/logger.h"
 #include "util/array_header.h"
 #include "page/array_block.h"
 #include "disk/disk_manager.h"
@@ -25,7 +26,7 @@ class BinarySearchArray{
         disk_manager_ptr_ = disk_manager_ptr;
         auto new_block_ptr = new ArrayBlock<KeyType>();
         header_ptr->PushBack(0,new_block_ptr);
-        cur_block_ptr = new_block_ptr;
+        cur_block_ptr_ = new_block_ptr;
     }
 
     size_t Find(KeyType key);
@@ -54,7 +55,7 @@ bool BinarySearchArray<KeyType>::PushBack(KeyType start){
     if(new_block_ptr){
         header_ptr_->PushBack(start,new_block_ptr);
         cur_block_ptr_ = new_block_ptr;
-        cur_block_ptr_->pushBack(start);
+        cur_block_ptr_->PushBack(start);
         return true;
     }
     return false;

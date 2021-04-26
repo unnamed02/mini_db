@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include <iterator>
 #include "util/array_header.h"
-
 
 
 namespace mini_dbm{
@@ -27,7 +27,13 @@ class VectorHeader : public ArrayHeader<KeyType,ValueType>{
     }
 
     size_t Find(const KeyType& key){
-        size_t upper_bound = upper_bound()
+        size_t header_offset = upper_bound(vector_.begin(),vector_.end(),key,[](const KeyType& key,auto to_compare)->bool{
+            return (key > to_compare.first);
+        }) - vector_.begin() - 1;
+        if(header_offset >= 0){
+            return NOT_FOUND_OFFSET;
+        }
+        return header_offset;
     };
 
     bool inline PushBack(const KeyType& key,const ValueType& value){

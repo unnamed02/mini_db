@@ -13,5 +13,7 @@ TEST(BINARY_SEARCH_ARRAY,BASIC_TEST){
         = new mini_dbm::VectorHeader<mini_dbm::duration_t,mini_dbm::ArrayBlock<mini_dbm::duration_t>*>(dmp_h1);
 
     mini_dbm::BinarySearchArray<mini_dbm::duration_t> array(array_head_ptr,dmp_h2);
+
+    array.PushBack(1);
 }
 
