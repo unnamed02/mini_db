@@ -3,7 +3,7 @@
 #include <stddef.h>
 namespace mini_dbm {
 
-static const int PAGE_SIZE = 20480;  
+static const int PAGE_SIZE = 1024 * 512;
 static const int INVALID_PAGE_ID = -1;
 static const int INVALID_FRAME_ID = -1;
 
@@ -22,7 +22,7 @@ static const int DURATION_SIZE = sizeof(duration_t);
 
 using time_scale_t = uint32_t;
 
-using page_offset_t = int16_t;
+using page_offset_t = int32_t;
 static const int PAGE_OFFSET_SIZE = sizeof(page_offset_t);
 
 static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;

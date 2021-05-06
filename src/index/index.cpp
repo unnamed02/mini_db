@@ -72,7 +72,7 @@ void Index::Alloc(){
 //should find in the buffer_[0],the last page
 //and then find in the rest of buffer
 char* Index::GetSlice(duration_t duration){
-    int16_t start,length;
+    page_offset_t start,length;
     if(duration >= buffer_[0].GetStart()){
         auto pg = reinterpret_cast<Page*>(buffer_[0].GetData());
         if(pg->Find(duration,&start,&length)){

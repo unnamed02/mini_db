@@ -24,6 +24,7 @@ class BinarySearchArray{
     BinarySearchArray(ArrayHeader<KeyType,ArrayBlock<KeyType>*>* header_ptr,DiskManager* disk_manager_ptr){
         header_ptr_ = header_ptr;
         disk_manager_ptr_ = disk_manager_ptr;
+
         auto new_block_ptr = new ArrayBlock<KeyType>();
         header_ptr->PushBack(0,new_block_ptr);
         cur_block_ptr_ = new_block_ptr;
@@ -36,6 +37,10 @@ class BinarySearchArray{
     bool PushBack(KeyType start);
 
     void Persist();
+
+    //todo:BinarySearchArray should be copible we will implement this later
+    BinarySearchArray(const BinarySearchArray&) = delete;
+    BinarySearchArray& operator=(const BinarySearchArray&) = delete;
 
 };
 
