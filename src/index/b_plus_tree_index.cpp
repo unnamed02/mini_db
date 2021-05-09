@@ -4,7 +4,7 @@ namespace mini_dbm{
 
 page_id_t BPlusTreeIndex::WriteSlice(const duration_t duration,char* const content){
     
-    //B+ tree should behave like this,we can skip that we can assume target_frame is always buffer[0]
+    //B+ tree should behave like this,we can skip that since we can assume target_frame is always buffer[0]
 
     // page_id_t target_page_id = GetPage(duration);
     // Frame target_frame;
@@ -18,11 +18,16 @@ page_id_t BPlusTreeIndex::WriteSlice(const duration_t duration,char* const conte
     Frame temp_frame = buffer_[0];
 
     cur_page->Clear();
-    AllocNewPage();
-    auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    page_id_t new_page_id = AllocNewPage(true,false);
     auto old_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    cur_page->Init(new_page_id,0,0,old_page->GetParentPageId(),true,false);
     old_page->MoveHalfTo(cur_page);
     disk_manager_ptr_->WritePage(old_page->GetPageId(),temp_frame.GetData());
+
+    t
+
+    return cur_page_id;
 }
 
 page_id_t BPlusTreeIndex::GetPage(const duration_t duration){

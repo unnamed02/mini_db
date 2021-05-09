@@ -69,7 +69,12 @@ namespace mini_dbm{
     }
 
     bool Find(const duration_t,page_id_t* const page_id){
-        
+
+    }
+
+    //TODO: remember to reset this page's start duration
+    void MoveHalfTo(Page* const target_page){
+
     }
 
 

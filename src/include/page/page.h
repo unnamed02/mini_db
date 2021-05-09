@@ -40,6 +40,8 @@ class Page{
     
     inline page_id_t GetPageId(){return page_id_;}
 
+    inline page_id_t GetParentPageId(){return parent_page_id_;}
+
     inline bool IsLeafPage(){
         return perm_ & LEAF_PAGE;
     }
@@ -47,8 +49,9 @@ class Page{
     //FOR TEST ONLY
     inline char* GetContent(){return content_;}
 
-    inline void Init(const page_id_t page_id,const duration_t start,bool is_leaf,bool is_root){
+    inline void Init(const page_id_t page_id,const duration_t start,const page_id_t parent_page_id,bool is_leaf,bool is_root){
         Init(page_id,start);
+        parent_page_id_ = parent_page_id;
         if(is_leaf){
             perm_ |= LEAF_PAGE;
         }else{
