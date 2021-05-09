@@ -88,6 +88,8 @@ class Page{
     bool Find(const duration_t,page_offset_t * const start,page_offset_t * const length);
 
     bool Find(const duration_t,page_id_t* const page_id);
+
+    void MoveHalfTo(Page* const target_page);
     
     private:        
     

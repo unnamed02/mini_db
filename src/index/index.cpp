@@ -52,9 +52,11 @@ page_id_t Index::AllocNewPage(){
 
 page_id_t Index::AllocNewPage(bool is_leaf,bool is_root){
     Alloc();
-
     auto pg_ptr = reinterpret_cast<Page*>(buffer_[0].GetData());
     pg_ptr->Init(cur_page_id_,cur_duration_,is_leaf,is_root);
+    if(!is_leaf){
+        disk_manager_ptr_->WritePage(pg_ptr->GetPageId(),buffer_[0].GetData());
+    }
     return cur_page_id_;
 }
 
@@ -64,8 +66,8 @@ void Index::Alloc(){
         LOG_ERROR("bad alloc: cur_page_id_ > max_pages");
         return;
     }
-    buffer_[0].Init(cur_page_id_,cur_duration_,0);
     cur_page_id_ = res;
+    buffer_[0].Init(cur_page_id_,cur_duration_,0);
 }
 
 
@@ -138,20 +140,19 @@ page_id_t Index::WriteSlice(const duration_t duration,char* slice){
     if(cur_page->Append(duration,slice)){
         cur_duration_ += duration;
         return cur_page->GetPageId();
-    }else{
-        LOG_DEBUG("changing page writing page : %d to disk",cur_page->GetPageId());
-        disk_manager_ptr_->WritePage(cur_page->GetPageId(),buffer_[0].GetData());
-        
-        cur_page->Clear();
-        AllocNewPage();
-        auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
-        if(!cur_page->Append(duration,slice)){
-            LOG_ERROR("slice is bigger than PAGE_SIZE");
-            return INVALID_PAGE_ID;
-        }
-        cur_duration_ += duration;
-        return cur_page->GetPageId();
     }
+    LOG_DEBUG("changing page writing page : %d to disk",cur_page->GetPageId());
+    disk_manager_ptr_->WritePage(cur_page->GetPageId(),buffer_[0].GetData());
+    
+    cur_page->Clear();
+    AllocNewPage();
+    auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    if(!cur_page->Append(duration,slice)){
+        LOG_ERROR("slice is bigger than PAGE_SIZE");
+        return INVALID_PAGE_ID;
+    }
+    cur_duration_ += duration;
+    return cur_page->GetPageId();
 }
 
 // TODO: use STL datastruct to record this

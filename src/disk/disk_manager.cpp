@@ -71,6 +71,7 @@ void DiskManager::WritePage(page_id_t page_id, const char *page_data) {
   num_writes_ += 1;
   db_io_.seekp(offset);
   db_io_.write(page_data, PAGE_SIZE);
+  LOG_DEBUG("num_writes: %d ",num_writes_);
   // check for I/O error
   if (db_io_.bad()) {
     LOG_DEBUG("I/O error while writing");

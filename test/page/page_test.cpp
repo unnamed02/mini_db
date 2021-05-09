@@ -22,7 +22,7 @@ TEST(PAGE_TEST,BASIC_TEST){
     disk_manager_ptr->ReadPage(page_id,buffer);
     page_ptr = reinterpret_cast<mini_dbm::Page*>(buffer);
     ASSERT_EQ(page_ptr->GetOffset(),500);
-    ASSERT_EQ(page_ptr->GetCatalogueOffset(),mini_dbm::MAX_CONTENT_SIZE-100 * mini_dbm::SLOT_SIZE);
+    ASSERT_EQ(page_ptr->GetCatalogueOffset(),mini_dbm::MAX_CONTENT_SIZE-100 * mini_dbm::LEAF_SLOT_SIZE);
     
     mini_dbm::page_offset_t start;
     mini_dbm::page_offset_t length;
@@ -75,7 +75,7 @@ TEST(PAGE_TEST,MAX_INSERT_TEST){
     page_ptr->Init(0,page_id);
 
     char str[] = "123456";
-    int max_size = mini_dbm::MAX_CONTENT_SIZE/((sizeof(str) + mini_dbm::SLOT_SIZE - 1));
+    int max_size = mini_dbm::MAX_CONTENT_SIZE/((sizeof(str) + mini_dbm::LEAF_SLOT_SIZE - 1));
 
     for(int i = 0;i<max_size;i++){
         bool res = page_ptr->Append(12,str);

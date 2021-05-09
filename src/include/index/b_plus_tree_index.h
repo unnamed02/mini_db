@@ -16,6 +16,7 @@ class BPlusTreeIndex : public Index{
     page_id_t GetPage(const duration_t);
 
     private:
+    page_id_t root_page_id_;
 
 };
 

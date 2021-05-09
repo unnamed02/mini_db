@@ -25,6 +25,7 @@ TEST(INDEX_TEST,BASIC_TEST){
     //     index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
     case 4:
         index_ptr = new mini_dbm::LinearIndex(disk_manager_ptr,10,10,6);
+        break;
     default:
         printf("invalid input\n");
         return;
@@ -66,6 +67,7 @@ TEST(INDEX_TEST,CHANGE_PAGE_TEST){
     //     index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
     case 4:
         index_ptr = new mini_dbm::LinearIndex(disk_manager_ptr,10,10,6);
+        break;
     default:
         printf("invalid input\n");
         return;
@@ -73,9 +75,10 @@ TEST(INDEX_TEST,CHANGE_PAGE_TEST){
 
     int n = mini_dbm::MAX_CONTENT_SIZE;
     char str[] = "12345678";
-    n /= (8+mini_dbm::SLOT_SIZE);
+    n /= (8+mini_dbm::LEAF_SLOT_SIZE);
     
     auto pg_id = index_ptr->WriteSlice(12,str);
+  
     for(int i = 1;i<n;i++){
         auto res = index_ptr->WriteSlice(12,str);
         ASSERT_EQ(res,pg_id);
@@ -90,9 +93,9 @@ TEST(INDEX_TEST,CHANGE_PAGE_TEST){
     delete disk_manager_ptr;
 }
 
-TEST(INDEX_TEST, GET_PAGE_TEST){
+TEST(INDEX_TEST,GET_PAGE_TEST){
 
-    auto disk_manager_ptr = new mini_dbm::DiskManager("get_page_test.db");
+    auto disk_manager_ptr = new mini_dbm::DiskManager("test.db");
 
     int t;
     mini_dbm::Index* index_ptr = nullptr;
@@ -100,8 +103,7 @@ TEST(INDEX_TEST, GET_PAGE_TEST){
     index_ptr = new mini_dbm::LinearIndex(disk_manager_ptr,10,10,6);
     int n = mini_dbm::MAX_CONTENT_SIZE;
     char str[] = "12345678";
-    n /= (8+mini_dbm::SLOT_SIZE);
-    
+    n /= (8+mini_dbm::LEAF_SLOT_SIZE);
 
     for(int i = 0;i<6*n;i++){
         auto res = index_ptr->WriteSlice(12,str);

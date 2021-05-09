@@ -4,10 +4,11 @@
 namespace mini_dbm {
 
 static const int PAGE_SIZE = 1024 * 512;
+
 static const int INVALID_PAGE_ID = -1;
 static const int INVALID_FRAME_ID = -1;
 
-static const char LEAF_PAGE = 1;
+static const char LEAF_PAGE = 1; 
 static const char ROOT_PAGE = 2;
 
 using page_id_t = int32_t;     // page id type
@@ -25,7 +26,14 @@ using time_scale_t = uint32_t;
 using page_offset_t = int32_t;
 static const int PAGE_OFFSET_SIZE = sizeof(page_offset_t);
 
-static const int32_t SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
+static const page_offset_t offset_page_size = PAGE_SIZE;
+static_assert(
+    offset_page_size == PAGE_SIZE,"page_offset_t is not the right type to represent page offset"
+);
+
+static const int32_t LEAF_SLOT_SIZE = DURATION_SIZE + PAGE_OFFSET_SIZE;
+
+static const int32_t INTERNAL_SLOT_SIZE = DURATION_SIZE + PAGE_ID_SIZE;
 
 static const size_t NOT_FOUND_OFFSET = -1; 
 

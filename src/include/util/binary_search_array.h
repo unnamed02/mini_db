@@ -38,7 +38,7 @@ class BinarySearchArray{
 
     void Persist();
 
-    //todo:BinarySearchArray should be copible we will implement this later
+    //TODO:BinarySearchArray should be copible，we will implement this later
     BinarySearchArray(const BinarySearchArray&) = delete;
     BinarySearchArray& operator=(const BinarySearchArray&) = delete;
 
