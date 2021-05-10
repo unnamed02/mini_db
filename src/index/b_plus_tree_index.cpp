@@ -38,20 +38,24 @@ page_id_t BPlusTreeIndex::InsertIntoParent(const page_id_t parent_page_id,const 
         return parent_page_ptr->GetPageId();
     }
     
-    if(!parent_page_ptr->IsRootPage()){
-        Frame new_frame;
-        page_id_t new_page_id = AllocNewPage(false,false);
-        auto new_page_ptr = reinterpret_cast<Page*>(new_frame->GetData());
-        parent_page_ptr->MoveHalfTo(new_page_ptr);
 
-        //TODO: could be buggy here,since InsertIntoParent may read this page again
-        disk_manager_ptr_->WritePage(parent_page_id,parent_page_ptr->GetDat());
-        new_page_ptr->SetParentPageId(InsertIntoParent(parent_page_id->GetParentPageId(),new_page_ptr->GetStart(),new_page_id));
-        disk_manager_ptr_->WritePage(new_page_id,new_frame->GetData());
-        return new_page_id;
-    }else{
-        
+    Frame new_frame;
+    page_id_t new_page_id = AllocNewPage(false,false);
+    auto new_page_ptr = reinterpret_cast<Page*>(new_frame->GetData());
+    parent_page_ptr->MoveHalfTo(new_page_ptr);
+    disk_manager_ptr_->WritePage(parent_page_id,parent_page_ptr->GetDat());
+
+    //TODO: reset this page and alloc a new root page
+    if(parent_page_ptr->IsRootPage()){
+        parent_page_ptr->Se
     }
+
+    new_page_ptr->SetParentPageId(InsertIntoParent(parent_page_id->GetParentPageId(),new_page_ptr->GetStart(),new_page_id));
+    new_page_ptr->Append(duration,child_page_id);
+
+    disk_manager_ptr_->WritePage(new_page_id,new_frame->GetData());
+    
+    return new_page_id;
 
 }
 
