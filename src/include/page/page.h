@@ -38,20 +38,20 @@ class Page{
 
     inline duration_t GetDuration(){return duration_;}
     
-    inline page_id_t GetPageId(){return page_id_;}
+    inline const page_id_t GetPageId(){return page_id_;}
 
-    inline page_id_t GetParentPageId(){return parent_page_id_;}
+    inline const page_id_t GetParentPageId(){return parent_page_id_;}
+    
+    inline void SetParentPageId(const page_id_t parent_page_id ){parent_page_id_ = parent_page_id;}
 
-    inline bool IsLeafPage(){
-        return perm_ & LEAF_PAGE;
-    }
-
+    inline bool IsLeafPage(){return perm_ & LEAF_PAGE;}
+ 
+    inline bool IsRootPage(){return perm_ & ROOT_PAGE;}
     //FOR TEST ONLY
-    inline char* GetContent(){return content_;}
+    // inline char* GetContent(){return content_;}
 
-    inline void Init(const page_id_t page_id,const duration_t start,const page_id_t parent_page_id,bool is_leaf,bool is_root){
+    inline void Init(const page_id_t page_id,const duration_t start,bool is_leaf,bool is_root){
         Init(page_id,start);
-        parent_page_id_ = parent_page_id;
         if(is_leaf){
             perm_ |= LEAF_PAGE;
         }else{

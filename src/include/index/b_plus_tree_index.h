@@ -15,6 +15,8 @@ class BPlusTreeIndex : public Index{
 
     page_id_t GetPage(const duration_t);
 
+    page_id_t InsertIntoParent(const page_id_t parent_page_id,const duration_t,const page_id_t child_page_id);
+
     private:
     page_id_t root_page_id_;
 

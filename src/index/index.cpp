@@ -146,7 +146,7 @@ page_id_t Index::WriteSlice(const duration_t duration,char* slice){
     
     cur_page->Clear();
     AllocNewPage();
-    auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    // auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
     if(!cur_page->Append(duration,slice)){
         LOG_ERROR("slice is bigger than PAGE_SIZE");
         return INVALID_PAGE_ID;

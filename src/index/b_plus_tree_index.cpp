@@ -19,15 +19,14 @@ page_id_t BPlusTreeIndex::WriteSlice(const duration_t duration,char* const conte
 
     cur_page->Clear();
     page_id_t new_page_id = AllocNewPage(true,false);
-    auto old_page = reinterpret_cast<Page*>(buffer_[0].GetData());
-    auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
-    cur_page->Init(new_page_id,0,0,old_page->GetParentPageId(),true,false);
+    auto old_page = reinterpret_cast<Page*>(temp_frame.GetData());
+    // auto cur_page = reinterpret_cast<Page*>(buffer_[0].GetData()); 
+
     old_page->MoveHalfTo(cur_page);
     disk_manager_ptr_->WritePage(old_page->GetPageId(),temp_frame.GetData());
+    cur_page->SetParentPageId(InsertIntoParent(cur_page->GetStart(),new_page_id));
 
-    t
-
-    return cur_page_id;
+    return cur_page_id_;
 }
 
 page_id_t BPlusTreeIndex::GetPage(const duration_t duration){
@@ -45,6 +44,24 @@ Index(disk_manager,scale,max_pages,buffer_size,false,true){
     auto root_page_ptr = reinterpret_cast<Page*>(temp_frame.GetData());
     root_page_ptr->Append(0,leaf_page_id);
     disk_manager_ptr_->WritePage(root_page_id_,temp_frame.GetData());
+
+}
+
+page_id_t InsertIntoParent(const page_id_t parent_page_id,const duration_t duration,const page_id_t child_page_id){
+    Frame parent_frame;
+    disk_manager_ptr_->ReadPage(parent_page_id,parent_frame->GetData());
+    auto parent_page_ptr = reinterpret_cast<Page*>(parent_frame->GetData());
+
+    if(parent_page_ptr->Append(duration,child_page_id)){
+        return parent_page_ptr->GetPageId();
+    }
+    
+    if(!parent_page_ptr->IsRootPage()){
+        Frame new_frame;
+        page_id_t new_page_id = AllocNewPage(false,false);
+        auto new_page_ptr = reinterpret_cast<Page*>(new_frame->GetData());
+        parent_page_ptr->MoveHalfTo(new_page_ptr);
+    }
 
 }
 
