@@ -26,6 +26,9 @@ page_id_t BPlusTreeIndex::WriteSlice(const duration_t duration,char* const conte
     disk_manager_ptr_->WritePage(old_page->GetPageId(),temp_frame.GetData());
     cur_page->SetParentPageId(InsertIntoParent(old_page->GetParentPageId(),cur_page->GetStart(),new_page_id));
 
+    disk_manager_ptr_->ReadPage(new_page_id,buffer_[0].GetData());
+    cur_page = reinterpret_cast<Page*>(buffer_[0].GetData());
+    buffer_[0].Init(cur_page->GetPageId(),cur_page->GetStart(),cur_page->GetDuration());
     
     return cur_page_id_;
 }

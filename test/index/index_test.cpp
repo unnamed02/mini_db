@@ -1,6 +1,6 @@
 #include "index/binary_index.h"
-// #include "index/b_plus_tree_index.h"
-// #include "index/polynomial_index.h"
+#include "index/b_plus_tree_index.h"
+#include "index/polynomial_index.h"
 #include "index/linear_index.h"
 #include "page/page.h"
 #include "index/index.h"
@@ -18,11 +18,11 @@ TEST(INDEX_TEST,BASIC_TEST){
     case 1:
         index_ptr = new mini_dbm::BinaryIndex(disk_manager_ptr,10,10,6);
         break;
-    // case 2:
-    //     index_ptr = new mini_dbm::BPlusTreeIndex(disk_manager_ptr,10,10,6);
-    //     break;
-    // case 3:
-    //     index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
+    case 2:
+        index_ptr = new mini_dbm::BPlusTreeIndex(disk_manager_ptr,10,10,6);
+        break;
+    case 3:
+        index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
     case 4:
         index_ptr = new mini_dbm::LinearIndex(disk_manager_ptr,10,10,6);
         break;
@@ -60,11 +60,11 @@ TEST(INDEX_TEST,CHANGE_PAGE_TEST){
     case 1:
         index_ptr = new mini_dbm::BinaryIndex(disk_manager_ptr,10,10,6);
         break;
-    // case 2:
-    //     index_ptr = new mini_dbm::BPlusTreeIndex(disk_manager_ptr,10,10,6);
-    //     break;
-    // case 3:
-    //     index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
+    case 2:
+        index_ptr = new mini_dbm::BPlusTreeIndex(disk_manager_ptr,10,10,6);
+        break;
+    case 3:
+        index_ptr = new mini_dbm::PolynomialIndex(disk_manager_ptr,10,10,6);
     case 4:
         index_ptr = new mini_dbm::LinearIndex(disk_manager_ptr,10,10,6);
         break;

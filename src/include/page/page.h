@@ -60,7 +60,6 @@ class Page{
         }
     }
 
-    inline void 
     //FOR TEST ONLY
     // inline char* GetContent(){return content_;}
 

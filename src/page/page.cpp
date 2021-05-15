@@ -68,13 +68,24 @@ namespace mini_dbm{
         return true;
     }
 
-    bool Find(const duration_t,page_id_t* const page_id){
+    bool Page::Find(const duration_t,page_id_t* const page_id){
 
     }
 
     //TODO: remember to reset this page's start duration
-    void MoveHalfTo(Page* const target_page){
+    void Page::MoveHalfTo(Page* const target_page){
+        if(IsLeafPage()){
+            page_offset_t min = 1;
+            page_offset_t max = (MAX_CONTENT_SIZE - catalogue_offset_)/LEAF_SLOT_SIZE;
+            page_offset_t mid = (min + max + 1)>>1;
 
+            page_offset_t offset = MAX_CONTENT_SIZE - (mid * LEAF_SLOT_SIZE);
+
+            memmove(target_page->content_ + MAX_CONTENT_SIZE - offset + catalogue_offset_,content_ + catalogue_offset_,offset - catalogue_offset_);
+
+            auto offset_ptr = reinterpret_cast<page_offset_t*>(content_ + offset + DURATION_SIZE);
+            start
+        }
     }
 
 
